@@ -1,0 +1,48 @@
+
+{% extends 'search.html' %}
+
+
+
+{% block results %}
+<br>
+        <div class="card">
+        <div class="card-body">
+
+<h3>{{form.query.data}}</h3>
+
+  {% for theme in trail.themes %}
+    <span class="label label-rounded label-primary">{{theme}}</span>
+  {% endfor %}
+
+</div>
+</div>
+<br><br>
+<h2>Recommended for you</h2>
+
+<div class="columns">
+  <div class="column col-6">
+        {% for similar_trail in similar_trails %}
+        <div class="card">
+        <div class="card-header h5">
+          {{similar_trail.name}}
+        </div>
+        <div class="card-body">
+          {% for tag in similar_trail.themes %}
+
+           <span class="label label-rounded {% if tag in trail.themes %} label-primary {% else %} label-secondarey {% endif %} ">{{tag}}</span>
+
+          {% endfor %}
+          </div>
+          </div>
+        {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
+  <div class="column col-6"><div style="height:50vh"><iframe src="/static/map_cluster.html?{{ timestamp }}" width="100%" height="150%"></iframe></div></div>
+</div>
+
+
+
+
+{% endblock %}
