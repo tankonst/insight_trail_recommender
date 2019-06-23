@@ -9,10 +9,10 @@ def get_db():
     return g.db
 
 class Trail:
-   def __init__(self, name, cluster, latitude, longitude, themes = []):
+   def __init__(self, name, cluster, latitude, longitude, tags = []):
       self.name = name
       self.cluster = int(cluster)
-      self.themes = themes
+      self.tags = tags
       self.coordinates = GeoPoint(latitude, longitude)
 
 class TrailDatabase:
@@ -28,16 +28,18 @@ class TrailDatabase:
             return False
        trails_data = trails_data.to_dict('records')
        trail_data = trails_data[0]
-       themes = create_tags_list(trail_data);
-       trail = Trail(name = trail_data['trail'], cluster = trail_data['cluster'], latitude = trail_data['latitude'], longitude = trail_data['longitude'], themes = themes)
+       tags = create_tags_list(trail_data)
+       trail = Trail(name = trail_data['trail'], cluster = trail_data['cluster'], latitude = trail_data['latitude'], longitude = trail_data['longitude'], tags = tags)
        return trail
 
-   def get_all_by_cluster(self, cluster_query):
-       trail_data = self.trails_db[self.trails_db['cluster']== cluster_query]
+   def get_all_by_same_cluster(self, trail: Trail):
+       ''' Search for trails within the same cluster as the input trail's '''
+       trail_data = self.trails_db[self.trails_db['cluster']== trail.cluster]
        result = []
        for row in trail_data.to_dict('records'):
-           themes = create_tags_list(row);
-           result.append(Trail(name = row['trail'], cluster = row['cluster'], latitude = row['latitude'], longitude = row['longitude'], themes = themes))
+           tags = create_tags_list(row)
+           if( not set(tags).isdisjoint(trail.tags)):
+                result.append(Trail(name = row['trail'], cluster = row['cluster'], latitude = row['latitude'], longitude = row['longitude'], tags = tags))
        return result
 
 
@@ -48,5 +50,5 @@ def create_tags_list(attributes):
             if(key not in exclude and attributes[key] > 0):
                 theme_values[key] = attributes[key]
         sorted_names = sorted(theme_values, key=lambda x: theme_values[x], reverse=True)
-        
+
         return sorted_names[0:5]

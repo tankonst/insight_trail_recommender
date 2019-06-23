@@ -2,9 +2,8 @@
 from werkzeug.debug import DebuggedApplication
 from flask_wtf.csrf import CSRFProtect
 from flask import Flask
+# import app.main.app
+from app import app
 
-app = Flask(__name__)
-app.secret_key = 'very secret key'
-csrf = CSRFProtect(app)
-
-import app.views
+dbg = DebuggedApplication(app, evalex=True)
+app.run(debug = True)

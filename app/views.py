@@ -15,9 +15,6 @@ from app.models.Trail import get_db
 @app.route('/', methods = ['POST', 'GET'])
 def index():
     form = TrailRecommendForm()
-    trails = []
-    themes = []
-    recommended_trails_tags = []
     timestamp = datetime.datetime.now()
 
     if(form.validate_on_submit()):

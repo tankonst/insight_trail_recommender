@@ -10,7 +10,7 @@
 
 <h3>{{form.query.data}}</h3>
 
-  {% for theme in trail.themes %}
+  {% for theme in trail.tags %}
     <span class="label label-rounded label-primary">{{theme}}</span>
   {% endfor %}
 
@@ -27,9 +27,9 @@
           {{similar_trail.name}}
         </div>
         <div class="card-body">
-          {% for tag in similar_trail.themes %}
+          {% for tag in similar_trail.tags %}
 
-           <span class="label label-rounded {% if tag in trail.themes %} label-primary {% else %} label-secondarey {% endif %} ">{{tag}}</span>
+           <span class="label label-rounded {% if tag in trail.tags %} label-primary {% else %} label-secondarey {% endif %} ">{{tag}}</span>
 
           {% endfor %}
           </div>

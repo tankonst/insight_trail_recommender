@@ -9,14 +9,14 @@ def load_data(csv_file):
 
 
 def similar_trails(trail, area: GeoArea):
-    trails_in_cluster = get_db().get_all_by_cluster(trail.cluster)
+    trails_in_cluster = get_db().get_all_by_same_cluster(trail)
     trails_in_cluster_by_radius = []
     for similar_trail in trails_in_cluster:
         distance = radius(area.point, trail.coordinates)
         if(distance < area.radius):
             trails_in_cluster_by_radius.append(similar_trail)
     return trails_in_cluster_by_radius
-        
+
 
 def mapping_trails(trail_group, center_point: GeoPoint):
     # create the map
@@ -27,17 +27,3 @@ def mapping_trails(trail_group, center_point: GeoPoint):
     map_name = './app/static/map_cluster.html'
     m.save(map_name)
     print('map is saved')
-
-def themes_of_cluster(trail_cluster):
-
-    cluster_keys = load_data('./app/static/data/cluster_key_new.csv')
-
-    cluster_themes = str(cluster_keys.iloc[trail_cluster].theme.unique())
-    aux= cluster_themes.replace('["[', '')
-    aux = aux.replace(']"]', '')
-    aux = aux.replace("'", '')
-    themes = {theme for theme in aux.split(',')}
-
-    return themes
-
-
