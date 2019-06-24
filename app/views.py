@@ -22,13 +22,13 @@ def index():
         if(trail == False):
             return render_template('/search_empty.html', form=form)
 
-        area = form.getArea()
+        area_center = form.getArea()
         # getting the list of trails and the cluster number
-        similar_trails = rt.similar_trails(trail = trail, area = area)
+        similar_trails = rt.similar_trails(trail = trail, area_center = area_center)
         print(similar_trails)
 
         # positioning all trails from the cluster on the NY map
-        rt.mapping_trails(similar_trails, center_point = area.point)
+        rt.mapping_trails(similar_trails, center_point = area_center.point)
 
         return render_template('/search_results.html', similar_trails=similar_trails,  form=form, timestamp = timestamp, trail = trail )
 

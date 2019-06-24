@@ -1,19 +1,20 @@
 import pandas as pd
 import folium
 from app.models.Trail import get_db
-from app.models.geo import GeoArea, GeoPoint, radius
+from app.models.geo import GeoArea, GeoPoint, spherical_distance
 
 def load_data(csv_file):
     trails_db = pd.read_csv(csv_file)
     return trails_db
 
 
-def similar_trails(trail, area: GeoArea):
+def similar_trails(trail, area_center: GeoArea):
     trails_in_cluster = get_db().get_all_by_same_cluster(trail)
     trails_in_cluster_by_radius = []
     for similar_trail in trails_in_cluster:
-        distance = radius(area.point, trail.coordinates)
-        if(distance < area.radius):
+        distance = spherical_distance(area_center.point, similar_trail.coordinates)
+        if(distance < area_center.radius):
+            print(distance)
             trails_in_cluster_by_radius.append(similar_trail)
     return trails_in_cluster_by_radius
 
