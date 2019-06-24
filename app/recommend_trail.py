@@ -14,7 +14,6 @@ def similar_trails(trail, area_center: GeoArea):
     for similar_trail in trails_in_cluster:
         distance = spherical_distance(area_center.point, similar_trail.coordinates)
         if(distance < area_center.radius):
-            print(distance)
             trails_in_cluster_by_radius.append(similar_trail)
     return trails_in_cluster_by_radius
 
