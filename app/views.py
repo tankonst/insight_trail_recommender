@@ -25,12 +25,14 @@ def index():
         area_center = form.getArea()
         # getting the list of trails and the cluster number
         similar_trails = rt.similar_trails(trail = trail, area_center = area_center)
-        
 
         # positioning all trails from the cluster on the NY map
         rt.mapping_trails(similar_trails, center_point = area_center.point)
+        similarities = rt.get_similarities(trail, similar_trails)
+        
 
-        return render_template('/search_results.html', similar_trails=similar_trails,  form=form, timestamp = timestamp, trail = trail )
+
+        return render_template('/search_results.html', similar_trails=similar_trails,  form=form, timestamp = timestamp, trail = trail, similarities = similarities  )
 
     return render_template('/search_default.html', form=form)
 
