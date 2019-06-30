@@ -1,4 +1,4 @@
-import pandas
+import pandas as pd
 from flask import g
 from app.models.geo import GeoPoint
 import math
@@ -20,7 +20,7 @@ class Trail:
 class TrailDatabase:
 
    def __init__(self):
-       self.trails_db = pandas.read_csv( './app/static/data/trail_geotags_clusters1.csv')
+       self.trails_db = pd.read_csv( './app/static/data/trail_geotags_clusters1.csv')
 
 
    def find_by_name(self, name_query):

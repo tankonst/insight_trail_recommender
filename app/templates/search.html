@@ -17,13 +17,10 @@
   </div>
 
   <div class="form-group">
-    <h6>Look for trail in the next area</h6>
+    <h6>Please enter your ZIP code and radius in miles</h6>
     <div class="docs-demo columns">
       <div class="column col-1">
-      {{ form.latitude( class="form-input", placeholder="Latitude") }}
-      </div>
-      <div class="column col-1">
-      {{ form.longitude(id="longitude", class="form-input", placeholder="Longitude") }}
+      {{ form.zipcode(id="zipcode", class="form-input", placeholder="zipcode") }}
       </div>
       <div class="column col-1">
       {{ form.radius(id="radius", class="form-input", placeholder="Radius, m") }}
